@@ -29,7 +29,7 @@ class UsersController extends Controller
         //
         $user = Users::where('id', $id)->get();
         
-        if( !empty($user['items']) ){
+        if( !empty($user) ){
             return response()->json( [ 'data' => $user, 'status' => 1 ] );
         } else {
             return response()->json( [ 'data' => '', 'status' => 0 ] );
@@ -53,31 +53,31 @@ class UsersController extends Controller
         
         $user->quote_id = $request->quote_id;
 
-        if ( !empty( $request->order_id ) )
+        if ( !empty( $request->input('order_id') ) )
         {
             $user->order_id = $request->order_id;
         }
-        if ( !empty( $request->page_id ) )
+        if ( !empty( $request->input('page_id') ) )
         {
             $user->page_id = $request->page_id;
         }
-        if ( !empty( $request->grand_total ) )
+        if ( !empty( $request->input('grand_total') ) )
         {
             $user->grand_total = $request->grand_total;
         }
-        if ( !empty( $request->email ) )
+        if ( !empty( $request->input('email') ) )
         {
             $user->email = $request->email;
         }
-        if ( !empty( $request->delivery_type ) )
+        if ( !empty( $request->input('delivery_type') ) )
         {
             $user->delivery_type = $request->delivery_type;
         }
-        if ( !empty( $request->delivery_date ) )
+        if ( !empty( $request->input('delivery_date') ) )
         {
             $user->delivery_date = $request->delivery_date;
         }
-        if ( !empty( $request->delivery_address ) )
+        if ( !empty( $request->input('delivery_address') ) )
         {
             $user->delivery_address = $request->delivery_address;
         }
@@ -105,31 +105,31 @@ class UsersController extends Controller
 
         $user->quote_id = $request->quote_id;
 
-        if ( !empty( $request->order_id ) )
+        if ( !empty( $request->input('order_id') ) )
         {
             $user->order_id = $request->order_id;
         }
-        if ( !empty( $request->page_id ) )
+        if ( !empty( $request->input('page_id') ) )
         {
             $user->page_id = $request->page_id;
         }
-        if ( !empty( $request->grand_total ) )
+        if ( !empty( $request->input('grand_total') ) )
         {
             $user->grand_total = $request->grand_total;
         }
-        if ( !empty( $request->email ) )
+        if ( !empty( $request->input('email') ) )
         {
             $user->email = $request->email;
         }
-        if ( !empty( $request->delivery_type ) )
+        if ( !empty( $request->input('delivery_type') ) )
         {
             $user->delivery_type = $request->delivery_type;
         }
-        if ( !empty( $request->delivery_date ) )
+        if ( !empty( $request->input('delivery_date') ) )
         {
             $user->delivery_date = $request->delivery_date;
         }
-        if ( !empty( $request->delivery_address ) )
+        if ( !empty( $request->input('delivery_address') ) )
         {
             $user->delivery_address = $request->delivery_address;
         }
