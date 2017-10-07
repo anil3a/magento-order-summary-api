@@ -11,6 +11,14 @@
 |
 */
 
-$router->get('/', function () use ($router) {
-    return $router->app->version();
+$router->get('/', function() use ($router) {
+    return 'Default Landing Page for this application. Please use corresponding url with valid request.';
+});
+
+$router->group(['prefix' => 'users/'], function() use ($router) {
+    $router->get('/','UsersController@index'); //get all the routes	
+    $router->post('/','UsersController@store'); //store single route
+    $router->get('/{id}/', 'UsersController@show'); //get single route
+    $router->put('/{id}/','UsersController@update'); //update single route
+    $router->delete('/{id}/','UsersController@destroy'); //delete single route
 });
