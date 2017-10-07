@@ -12,7 +12,7 @@ class FunnelpagesTableSeeder extends Seeder
     public function run()
     {
     	//Default Data for Funnel Seeders
-        DB::table('funnelpages')->insert(
+        DB::table('funnelpages')->insert([
         	[
 	            'id' => 10,
 	            'title' => 'Other Pages',
@@ -55,6 +55,6 @@ class FunnelpagesTableSeeder extends Seeder
 	            'url' => null,
 	            'active' => 1,
         	]
-    	);
+    	]);
     }
 }
