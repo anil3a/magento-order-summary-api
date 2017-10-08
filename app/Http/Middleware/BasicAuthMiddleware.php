@@ -15,14 +15,18 @@ class BasicAuthMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if( $request->getUser() != env('API_USERNAME') || 
+        /*if( $request->getUser() != env('API_USERNAME') || 
             $request->getPassword() != env('API_PASSWORD') 
         ){
             $headers = array('WWW-Authenticate' => 'Basic');
             return response('Unauthorized', 401, $headers);
-        }
+        }*/
         
-        return $next($request);
+        return $next($request)
+        ->header('Access-Control-Allow-Origin', $_SERVER['HTTP_ORIGIN'])
+        ->header('Access-Control-Allow-Methods', 'PUT, POST, DELETE')
+        ->header('Access-Control-Allow-Headers', 'Accept, Content-Type, X-CSRF-TOKEN')
+        ->header('Access-Control-Allow-Credentials', 'true');
     }
 
 }
