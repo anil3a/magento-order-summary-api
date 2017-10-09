@@ -193,6 +193,10 @@ class UsersController extends Controller
         {
             $user->delivery_address = $request->delivery_address;
         }
+        if ( !empty( $request->input('quantity') ) )
+        {
+            $user->quantity = $request->quantity;
+        }
         
         $user->save();
 
