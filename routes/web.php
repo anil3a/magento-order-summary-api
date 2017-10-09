@@ -10,13 +10,20 @@
 | and give it the Closure to call when that URI is requested.
 |
 */
-/*
+
 $router->get('/', function() use ($router) {
     return 'Default Landing Page for this application. Please use corresponding url with valid request.';
 });
-*/
+
+/*Route::options('{all:.*}', ['middleware' => 'cors', function() {
+    return response('');
+}]);*/
 
 Route::group(['prefix'=>'/', 'middleware' => 'BasicAuth'], function($router) {
+
+    $router->options('/*', function() use ($router) {
+        return 'Default Landing Page for this application. Please use corresponding url with valid request.';
+    });
 
     $router->get('/', function() use ($router) {
         return 'Default Landing Page for this application. Please use corresponding url with valid request.';

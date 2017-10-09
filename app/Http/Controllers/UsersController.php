@@ -94,14 +94,15 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $quote_id)
     {
         // Quote id is always required
         $this->validate($request, [
             'quote_id' => 'required'
         ]);
 
-        $user = Users::find($id);
+        $user = Users::where('quote_id', $quote_id)->get();
+        //where('about', 'data')->firstOrFail();
 
         $user->quote_id = $request->quote_id;
 

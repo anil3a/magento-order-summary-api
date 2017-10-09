@@ -11,6 +11,15 @@
 |
 */
 
+if( !empty( $_SERVER['REQUEST_METHOD'] ) && $_SERVER['REQUEST_METHOD'] == 'OPTIONS' )
+{
+	header('Access-Control-Allow-Origin: http://localhost');
+	header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
+	header('Access-Control-Allow-Headers: Origin, Content-Type, Authorization');
+	header('Access-Control-Allow-Credentials', 'true');
+	die("");
+}
+
 $app = require __DIR__.'/../bootstrap/app.php';
 
 /*
