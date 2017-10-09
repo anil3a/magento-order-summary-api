@@ -11,9 +11,9 @@
 |
 */
 
-$router->get('/', function() use ($router) {
+/*$router->get('/', function() use ($router) {
     return 'Default Landing Page for this application. Please use corresponding url with valid request.';
-});
+});*/
 
 /*Route::options('{all:.*}', ['middleware' => 'cors', function() {
     return response('');
@@ -21,9 +21,9 @@ $router->get('/', function() use ($router) {
 
 Route::group(['prefix'=>'/', 'middleware' => 'BasicAuth'], function($router) {
 
-    $router->options('/*', function() use ($router) {
+    /*$router->options('/*', function() use ($router) {
         return 'Default Landing Page for this application. Please use corresponding url with valid request.';
-    });
+    });*/
 
     $router->get('/', function() use ($router) {
         return 'Default Landing Page for this application. Please use corresponding url with valid request.';
