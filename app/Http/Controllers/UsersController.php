@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Users;
+use App\Pageurls;
 
 class UsersController extends Controller
 {
@@ -103,6 +104,134 @@ class UsersController extends Controller
 
         $user = Users::where('quote_id', $quote_id)->get();
         //where('about', 'data')->firstOrFail();
+
+        $user->quote_id = $request->quote_id;
+
+        if ( !empty( $request->input('order_id') ) )
+        {
+            $user->order_id = $request->order_id;
+        }
+        if ( !empty( $request->input('page_id') ) )
+        {
+            $user->page_id = $request->page_id;
+        }
+        if ( !empty( $request->input('grand_total') ) )
+        {
+            $user->grand_total = $request->grand_total;
+        }
+        if ( !empty( $request->input('email') ) )
+        {
+            $user->email = $request->email;
+        }
+        if ( !empty( $request->input('delivery_type') ) )
+        {
+            $user->delivery_type = $request->delivery_type;
+        }
+        if ( !empty( $request->input('delivery_date') ) )
+        {
+            $user->delivery_date = $request->delivery_date;
+        }
+        if ( !empty( $request->input('delivery_address') ) )
+        {
+            $user->delivery_address = $request->delivery_address;
+        }
+        
+        $user->save();
+
+        return response()->json( [ 'data' => $user, 'status' => 1 ] );
+    }
+
+    /**
+     * Create or update the specified resource in storage by QUOTE
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function savebyquote(Request $request, $quote_id)
+    {
+        // Quote id is always required
+        $this->validate($request, [
+            'quote_id' => 'required'
+        ]);
+
+        $user = Users::where('quote_id', $quote_id)->first();
+        //where('about', 'data')->firstOrFail();
+
+        if ( empty( $user ) )
+        {
+            $user = new Users();
+        }
+
+        $user->quote_id = $request->quote_id;
+
+        if ( !empty( $request->input('order_id') ) )
+        {
+            $user->order_id = $request->order_id;
+        }
+        if ( !empty( $request->input('page_id') ) )
+        {
+            $user->page_id = $request->page_id;
+        }
+        if ( !empty( $request->input('grand_total') ) )
+        {
+            $user->grand_total = $request->grand_total;
+        }
+        if ( !empty( $request->input('email') ) )
+        {
+            $user->email = $request->email;
+        }
+        if ( !empty( $request->input('delivery_type') ) )
+        {
+            $user->delivery_type = $request->delivery_type;
+        }
+        if ( !empty( $request->input('delivery_date') ) )
+        {
+            $user->delivery_date = $request->delivery_date;
+        }
+        if ( !empty( $request->input('delivery_address') ) )
+        {
+            $user->delivery_address = $request->delivery_address;
+        }
+        
+        $user->save();
+
+        if ( !empty( $request->input('sparkle_currenturl') ) )
+        {
+            $url = new Pageurls();
+        
+            $url->user_id = $user->id;
+            $url->url = $request->sparkle_currenturl;
+
+            $url->save();
+        }
+
+
+        return response()->json( [ 'data' => $user, 'status' => 1 ] );
+        
+    }
+
+    /**
+     * Create or update the specified resource in storage by USER ID
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function save(Request $request, $id)
+    {
+        // Quote id is always required
+        $this->validate($request, [
+            'quote_id' => 'required'
+        ]);
+
+        $user = Users::where('id', $id)->first();
+        //where('about', 'data')->firstOrFail();
+
+        if ( empty( $user ) )
+        {
+            $user = new Users();
+        }
 
         $user->quote_id = $request->quote_id;
 

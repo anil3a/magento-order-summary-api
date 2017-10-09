@@ -32,8 +32,10 @@ Route::group(['prefix'=>'/', 'middleware' => 'BasicAuth'], function($router) {
     $router->group(['prefix' => 'users/'], function() use ($router) {
         $router->get('/','UsersController@index'); //get all the routes	
         $router->post('/','UsersController@store'); //store single route
+        $router->post('/save/{id}','UsersController@save'); //save users if exist update or create single route
+        $router->post('/savebyquote/{quote_id}','UsersController@savebyquote'); //save users if exist update or create single route
         $router->get('/{id}/', 'UsersController@show'); //get single route
-        $router->put('/{id}/','UsersController@update'); //update single route
+        $router->put('/{quote_id}/','UsersController@update'); //update single route
         $router->delete('/{id}/','UsersController@destroy'); //delete single route
     });
 
