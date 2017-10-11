@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Users;
 use App\Pageurls;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\DB;
 
 class UsersController extends Controller
 {
@@ -15,7 +17,21 @@ class UsersController extends Controller
     public function index()
     {
         //
-        $users = Users::orderBy('id', 'desc')->take(20)->get();
+        //$users = Users::orderBy('id', 'desc')->take(20)->get();
+        $limit = 20;
+        if ( Input::get('limit') ) {
+            $limit = Input::get('limit');
+        }
+
+        $users = DB::table('users')
+            ->select('users.*', 'pageurls.url' )
+            ->leftJoin('pageurls', function($joinpageurl){
+                $joinpageurl->on('users.id', '=', 'pageurls.user_id')
+                ->on('pageurls.id', '=', 
+                       DB::raw('(select max(id) from pageurls where user_id = users.id)'));
+            })
+            ->orderBy('users.id', 'desc')->take( $limit )->get();
+
         return response()->json( [ 'data' => $users, 'status' => 1 ] );
     }
 
