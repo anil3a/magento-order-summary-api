@@ -30,6 +30,7 @@ class UsersController extends Controller
                 ->on('pageurls.id', '=', 
                        DB::raw('(select max(id) from pageurls where user_id = users.id)'));
             })
+            ->where("users.page_id", ">", "4")
             ->orderBy('users.id', 'desc')->take( $limit )->get();
 
         return response()->json( [ 'data' => $users, 'status' => 1 ] );
@@ -303,5 +304,91 @@ class UsersController extends Controller
         } else {
             return response()->json( [ 'data' => $id, 'status' => 0 ] );
         }
+    }
+
+    /**
+     * Create or update the specified resource in storage by CO
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function savebycookie(Request $request, $cookie_id)
+    {
+        // Quote id is always required
+        $this->validate($request, [
+            'cookie_id' => 'required'
+        ]);
+
+        $user = Users::where('cookie_id', $cookie_id)->first();
+        //where('about', 'data')->firstOrFail();
+
+        if ( empty( $user ) )
+        {
+            $user = new Users();
+        }
+
+        $user->cookie_id = $request->cookie_id;
+        if ( !empty( $request->input('ip') ) )
+        {
+            $user->ip = $request->ip;
+        }
+        if ( !empty( $request->input('agent') ) )
+        {
+            $user->agent = $request->agent;
+        }
+
+        if ( !empty( $request->input('quote_id') ) )
+        {
+            $user->quote_id = $request->quote_id;
+        }
+        if ( !empty( $request->input('order_id') ) )
+        {
+            $user->order_id = $request->order_id;
+        }
+        if ( !empty( $request->input('page_id') ) )
+        {
+            $user->page_id = $request->page_id;
+        }
+        if ( !empty( $request->input('grand_total') ) )
+        {
+            $user->grand_total = $request->grand_total;
+        }
+        if ( !empty( $request->input('email') ) )
+        {
+            $user->email = $request->email;
+        }
+        if ( !empty( $request->input('delivery_type') ) )
+        {
+            $user->delivery_type = $request->delivery_type;
+        }
+        if ( !empty( $request->input('delivery_date') ) )
+        {
+            $user->delivery_date = $request->delivery_date;
+        }
+        if ( !empty( $request->input('delivery_address') ) )
+        {
+            $user->delivery_address = $request->delivery_address;
+        }
+        if ( !empty( $request->input('quantity') ) )
+        {
+            $user->quantity = $request->quantity;
+        }
+        
+        $user->save();
+
+        if ( !empty( $request->input('sparkle_currenturl') ) )
+        {
+            $url = new Pageurls();
+        
+            $url->user_id = $user->id;
+            $url->url = $request->sparkle_currenturl;
+
+            $url->save();
+        }
+
+
+        return response()->json( [ 'data' => $user, 'status' => 1 ] );
+        
     }
 }
