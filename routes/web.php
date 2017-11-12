@@ -31,13 +31,18 @@ Route::group(['prefix'=>'/', 'middleware' => 'BasicAuth'], function($router) {
 
     $router->group(['prefix' => 'users/'], function() use ($router) {
         $router->get('/','UsersController@index'); //get all the routes	
-        $router->post('/','UsersController@store'); //store single route
-        $router->post('/save/{id}','UsersController@save'); //save users if exist update or create single route
+        //$router->post('/','UsersController@store'); //store single route
+        //$router->post('/save/{id}','UsersController@save'); //save users if exist update or create single route
         $router->post('/savebyquote/{quote_id}','UsersController@savebyquote'); //save users if exist update or create single route
         $router->post('/savebyvisits/{cookie_id}','UsersController@savebycookie'); //save users if exist update or create single route
         //$router->get('/{id}/', 'UsersController@show'); //get single route
-        $router->put('/{quote_id}/','UsersController@update'); //update single route
+        //$router->put('/{quote_id}/','UsersController@update'); //update single route
         //$router->delete('/{id}/','UsersController@destroy'); //delete single route
+    });
+
+    $router->group(['prefix' => 'v1/'], function() use ($router) {
+        $router->get('/users','BoardsController@index'); //get all the routes 
+        $router->get('/visits','BoardsController@pagevisits'); //store single route
     });
 
     /*$router->group(['prefix' => 'pages/'], function() use ($router) {
