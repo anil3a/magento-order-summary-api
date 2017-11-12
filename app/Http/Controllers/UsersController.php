@@ -345,7 +345,13 @@ class UsersController extends Controller
             }
         }
 
-        $user = Users::where('cookie_id', $cookie_id)->first();
+        if ( !empty( $request->input('quote_id') ) )
+        {
+            $user = Users::where('cookie_id', $cookie_id)->where('quote_id',$request->input('quote_id'))->first();
+        } else 
+        {
+            $user = Users::where('cookie_id', $cookie_id)->first();
+        }
         //where('about', 'data')->firstOrFail();
 
         if ( empty( $user ) )
