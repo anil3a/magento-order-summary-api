@@ -16,7 +16,6 @@ class BoardsController extends Controller
      */
     public function index()
     {
-        //
         //$users = Users::orderBy('id', 'desc')->take(20)->get();
         $limit = 20;
         if ( Input::get('limit') ) {

@@ -4,11 +4,23 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Users;
 use App\Pageurls;
+use App\Options;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\DB;
 
 class UsersController extends Controller
 {
+    protected $options;
+
+    public function __construct()
+    {
+        if ( empty( $this->options ) )
+        {
+            $opts = new Options();
+            $this->options = $opts->getCachedOptions();
+        }
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -319,6 +331,19 @@ class UsersController extends Controller
         $this->validate($request, [
             'cookie_id' => 'required'
         ]);
+
+        if ( !empty( $request->input('ip') ) && !empty( $this->options['whitelist_board'] ) )
+        {
+            $ips = explode( ",", $this->options['whitelist_board'] );
+
+            foreach ( $ips as $ip )
+            {
+                if ( $ip = $request->input('ip') )
+                {
+                    return false;
+                }
+            }
+        }
 
         $user = Users::where('cookie_id', $cookie_id)->first();
         //where('about', 'data')->firstOrFail();
