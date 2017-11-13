@@ -338,7 +338,7 @@ class UsersController extends Controller
 
             foreach ( $ips as $ip )
             {
-                if ( $ip = $request->input('ip') )
+                if ( $ip == $request->input('ip') )
                 {
                     return response()->json( [ 'data' => array('ip'=>'I know who you are boiee.'), 'status' => 0 ] );
                 }
