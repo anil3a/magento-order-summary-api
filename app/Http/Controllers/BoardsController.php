@@ -88,7 +88,8 @@ class BoardsController extends Controller
 
         $query = DB::table('pageurls')
             ->select(   'pageurls.user_id','pageurls.url','pageurls.created_at','users.cookie_id',
-                        'users.ip','users.quote_id','users.order_id','users.delivery_date','users.page_id'
+                        'users.grand_total','users.ip','users.quote_id','users.order_id',
+                        'users.delivery_date','users.page_id'
             )
             ->leftJoin('users', function($joinpageurl){
                 $joinpageurl->on('pageurls.user_id', '=', 'users.id');
