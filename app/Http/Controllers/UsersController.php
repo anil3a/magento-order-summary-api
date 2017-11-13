@@ -354,6 +354,11 @@ class UsersController extends Controller
         }
         //where('about', 'data')->firstOrFail();
 
+        if ( empty( $user ) && !empty( $request->input('quote_id') ) )
+        {
+            $user = Users::where('quote_id', $request->input('quote_id') )->first();
+        }
+
         if ( empty( $user ) )
         {
             $user = new Users();
