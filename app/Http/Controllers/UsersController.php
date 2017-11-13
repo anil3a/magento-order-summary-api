@@ -340,7 +340,7 @@ class UsersController extends Controller
             {
                 if ( $ip = $request->input('ip') )
                 {
-                    return false;
+                    return response()->json( [ 'data' => array('ip'=>'I know who you are boiee.'), 'status' => 0 ] );
                 }
             }
         }
